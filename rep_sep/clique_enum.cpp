@@ -46,7 +46,7 @@
 
 #include <seqan/random.h>
 #include <seqan/realign.h>
-#include <seqan/misc/misc_union_find.h>
+#include <seqan/misc/union_find.h>
 
 #include <boost/heap/fibonacci_heap.hpp>
 

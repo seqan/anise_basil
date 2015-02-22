@@ -170,14 +170,14 @@ void OeaExtractorApp::runPipeline()
 
     // Setup BamReader with progress callback.
     BamReader bamReader(bamReaderOptions);
-    bamFileOut.header = bamReader.bamFileIn().header;
+    context(bamFileOut) = context(bamReader.bamFileIn());
     // Setup progress indicator.
     unsigned long long const MIB = 1024 * 1024;
-    progress.reset(new ProgressBar(std::cerr, 0, fileSize(bamReader.bamFileIn()) / MIB,
+    progress.reset(new ProgressBar(std::cerr, 0, bamReader.fileSize() / MIB,
                                    (options.verbosity == 1)));
     progress->setLabel(toCString(bamReaderOptions.bamFileName));
     progress->updateDisplay();
-    auto callback = [&bamReader,&progress,MIB] { progress->advanceTo(position(bamReader.bamFileIn()) / MIB); };
+    auto callback = [&bamReader,&progress,MIB] { progress->advanceTo(bamReader.approximatePosition() / MIB); };
     bamReader.setProgressCallback(callback);
     int BUFFER_SIZE = 2;
     BamFilter bamFilter(bamReader.bamIOContext(), bamFilterOptions);

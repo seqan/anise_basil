@@ -35,6 +35,7 @@
 #include "preparation_step.h"
 
 #include <atomic>
+#include <fstream>
 #include <mutex>
 #include <iostream>
 
@@ -60,6 +61,16 @@
 
 namespace  // anonymous namespace
 {
+
+// ----------------------------------------------------------------------------
+// Function fileSize()
+// ----------------------------------------------------------------------------
+
+std::ifstream::pos_type fileSize(const char * fileName)
+{
+    std::ifstream in(fileName, std::ifstream::ate | std::ifstream::binary);
+    return in.tellg(); 
+}
 
 // ----------------------------------------------------------------------------
 // Function startsWithClipping().
@@ -193,7 +204,7 @@ size_t OrphanExtractor::createFastq(TemporaryFileManager & tmpMgr)
     // Computation for progress display and progress bar for this.
     unsigned const MIB = 1024 * 1024;
     __int64 pos = position(bamFileIn) / MIB;
-    __int64 size = fileSize(bamFileIn) / MIB;
+    __int64 size = fileSize(toCString(baiFilename)) / MIB;
     unsigned const MAX_BATCH_SIZE = 1000;
     unsigned batchSize = 0;
     ProgressBar pb(std::cerr, pos, size, (options.verbosity == AniseOptions::NORMAL));
@@ -332,7 +343,7 @@ void AlignmentExtractor::run(ReadSet & readSet, AssemblySiteState const & siteSt
 void AlignmentExtractor::jumpToRegion(AssemblySiteState const & siteState)
 {
     int pos = std::max(0, siteState.pos - options.maxFragmentSize());
-    int endPos = sequenceLengths(context(bamFileIn))[siteState.rID];
+    int endPos = contigLengths(context(bamFileIn))[siteState.rID];
     if (siteState.pos + 2 * options.maxFragmentSize() < endPos)
         endPos = siteState.pos + 2 * options.maxFragmentSize();
     bool hasAlignments = false;
@@ -579,7 +590,7 @@ void AlignmentExtractor::updateRecordTags(seqan::BamAlignmentRecord & record) co
 
     seqan::BamTagsDict tagsDict(record.tags);
     setTagValue(tagsDict, KEY_BIRTH_STEP, 0);  // mapped in step 0
-    setTagValue(tagsDict, KEY_ORIG_REF, toCString(nameStore(context(bamFileIn))[record.rID]));
+    setTagValue(tagsDict, KEY_ORIG_REF, toCString(contigNames(context(bamFileIn))[record.rID]));
     setTagValue(tagsDict, KEY_ORIG_STRAND, label[!!hasFlagRC(record)]);
     setTagValue(tagsDict, KEY_ORIG_POS, record.beginPos + 1);  // original pos
     setTagValue(tagsDict, KEY_ORIG_CIGAR, ss.str().c_str());  // original CIGAR string

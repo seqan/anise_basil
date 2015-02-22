@@ -40,7 +40,7 @@
 #include <seqan/file.h>  // for printing seqan::String
 
 #include <seqan/graph_types.h>  // ugly dependency of misc_union_find.h
-#include <seqan/misc/misc_union_find.h>
+#include <seqan/misc/union_find.h>
 
 #include <lemon/smart_graph.h>
 #include <lemon/dfs.h>

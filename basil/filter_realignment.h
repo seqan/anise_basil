@@ -55,7 +55,7 @@ class RealignmentFilterImpl;
 // Typedef TBamIOContext
 // ----------------------------------------------------------------------------
 
-typedef seqan::BamIOContext<seqan::StringSet<seqan::CharString> > TBamIOContext;
+typedef seqan::FormattedFileContext<seqan::BamFileIn const, seqan::Dependent<> >::Type const TBamIOContext;
 
 // ----------------------------------------------------------------------------
 // Class RealignmentFilter

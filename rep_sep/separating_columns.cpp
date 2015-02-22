@@ -220,7 +220,7 @@ bool SeparatingColumnEnumerator::testColumns(
         profileU.count[ordValue(colU[i].i2)] += numReads;
         profileV.count[ordValue(colV[i].i2)] += numReads;
     }
-    LocalVariationStore::TConsensusAlphabet consensusU(_getMaxIndex(profileU)), consensusV(_getMaxIndex(profileV));
+    LocalVariationStore::TConsensusAlphabet consensusU(getMaxIndex(profileU)), consensusV(getMaxIndex(profileV));
 
     // Count number of deviations.
     for (unsigned i = 0; i < length(colU); ++i)

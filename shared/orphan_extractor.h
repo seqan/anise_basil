@@ -75,6 +75,13 @@ private:
     // Create the orphans.fq file.  Returns seqan::maxValue<size_t>() if exists already.
     size_t createFastq();
 
+    // Helper function for getting the size of a file.
+    std::ifstream::pos_type fileSize(const char * fileName)
+    {
+        std::ifstream in(fileName, std::ifstream::ate | std::ifstream::binary);
+        return in.tellg(); 
+    }
+
     // The BamFileIn to use for reading the reads and the BamIndex to use for jumping.
     seqan::BamFileIn bamFileIn;
     seqan::BamIndex<seqan::Bai> bamIndex;
@@ -113,7 +120,7 @@ size_t OrphanExtractor::createFastq()
     // Computation for progress display and progress bar for this.
     unsigned const MIB = 1024 * 1024;
     __int64 pos = position(bamFileIn) / MIB;
-    __int64 size = fileSize(bamFileIn) / MIB;
+    __int64 size = fileSize(bamInFile.c_str()) / MIB;
     unsigned const MAX_BATCH_SIZE = 1000;
     unsigned batchSize = 0;
     ProgressBar pb(std::cerr, pos, size, verbosity == 1);

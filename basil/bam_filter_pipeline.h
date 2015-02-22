@@ -64,7 +64,7 @@ class BamReaderImpl;
 
 // A typedef for the BamIOContext specialization we use here.
 
-typedef seqan::BamIOContext<seqan::StringSet<seqan::CharString> > TBamIOContext;
+typedef seqan::FormattedFileContext<seqan::BamFileIn const, seqan::Dependent<> >::Type const TBamIOContext;
 
 // ----------------------------------------------------------------------------
 // Class BamReaderOptions
@@ -167,6 +167,10 @@ public:
     TBamIOContext & bamIOContext();
     // Return the internal BamFileIn.
     seqan::BamFileIn const & bamFileIn();
+    // Return approximate position in input file.
+    __uint64 approximatePosition();
+    // Return size of input file.
+    __uint64 fileSize() const;
 
     // Set a callback that is called regularly after having read some records.
     void setProgressCallback(std::function<void()> fun);

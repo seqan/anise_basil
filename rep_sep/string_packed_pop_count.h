@@ -36,7 +36,7 @@
 #define SANDBOX_HERBARIUM_APPS_ANISE_REP_SEP_STRING_PACKED_POP_COUNT_H_
 
 #include <seqan/sequence.h>
-#include <seqan/misc/misc_bit_twiddling.h>
+#include <seqan/misc/bit_twiddling.h>
 
 namespace seqan {
 

@@ -406,9 +406,9 @@ seqan::ArgumentParser::ParseResult parseCommandLine(AniseOptions & options, int 
 
     addTextSection(parser, "References");
     addText(parser,
-            "Hajirasouliha, I., Hormozdiari, F., Alkan, C., Kidd, J.M., Birol, I., Eichler, E.E., Sahinalp, S.C.  "
-            "Detection and characterization of sequence insertions using paired-end next-generation sequencing.  "
-            "Bioinformatics 2010 May; 15;26(10):1277-83.");
+            "Holtgrewe, M., Kuchenbecker, L., & Reinert, K. (2015). Methods for the "
+            "Detection and Assembly of Novel Sequence in High-Throughput Sequencing "
+            "Data. Bioinformatics, btv051.");
 
     // Parse command line
     seqan::ArgumentParser::ParseResult res = seqan::parse(parser, argc, argv);
@@ -635,18 +635,18 @@ void AniseAppImpl::checkInput()
     if (!open(bamFileIn, toCString(options.inputMapping)))
         throw std::runtime_error("Could not open BAM file.");
     seqan::BamHeader bamHeader;
-    readRecord(bamHeader, bamFileIn);
+    readHeader(bamHeader, bamFileIn);
 
     std::set<std::string> bamSeqIds;
-    for (unsigned i = 0; i < length(nameStore(context(bamFileIn))); ++i)
-        bamSeqIds.insert(toCString(nameStore(context(bamFileIn))[i]));
+    for (unsigned i = 0; i < length(contigNames(context(bamFileIn))); ++i)
+        bamSeqIds.insert(toCString(contigNames(context(bamFileIn))[i]));
 
     // Open VCF input file.
     seqan::VcfFileIn vcfFileIn;
     if (!open(vcfFileIn, toCString(options.inputVcf)))
         throw std::runtime_error("Could not open input VCF file.");
     seqan::VcfHeader vcfHeader;
-    readRecord(vcfHeader, vcfFileIn);
+    readHeader(vcfHeader, vcfFileIn);
 
     std::set<std::string> vcfSeqIds;
     for (unsigned i = 0; i < length(contigNames(context(vcfFileIn))); ++i)

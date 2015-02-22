@@ -35,7 +35,7 @@
 #include "progress_indicator.h"
 
 // TODO(holtgrew): Better fallback for non-terminal mode.
-#include <seqan/misc/misc_terminal.h>
+#include <seqan/misc/terminal.h>
 
 #include <atomic>
 #include <mutex>

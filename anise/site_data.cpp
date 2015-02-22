@@ -39,7 +39,7 @@
 #include <sstream>
 
 #include <seqan/bam_io.h>
-#include <seqan/misc/misc_name_store_cache.h>
+#include <seqan/misc/name_store_cache.h>
 #include <seqan/seq_io.h>
 #include <seqan/stream.h>
 
@@ -333,7 +333,7 @@ void ReadSet::save(TemporaryFileManager & manager, int siteID, int stepNo, Scaff
     setTagValue("  ", "Temporary read set file file created by ANISE.", co);
     appendValue(bamHeader, co);
 
-    writeRecord(bamFileOut, bamHeader);
+    writeHeader(bamFileOut, bamHeader);
 
     // Do not write out records of mates with one or more reads that are unaligned and have been mapped too many
     // steps before.  We first collect their names.

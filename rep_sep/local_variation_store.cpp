@@ -126,10 +126,10 @@ void LocalVariationStoreFiller::initialFill(unsigned contigID, unsigned offset)
     unsigned pos = offset;
     for (TProfileIter it = begin(profile, Standard()); it != end(profile, Standard()); ++it, ++pos)
         for (unsigned i = 0; i < 6u; ++i)  // Note: N does not count as deviation, see below.
-            if ((i != 4) && (i != _getMaxIndex(*it)) && (int)it->count[i] >= options.minDeviations)
+            if ((i != 4) && (i != getMaxIndex(*it)) && (int)it->count[i] >= options.minDeviations)
             {
                 typedef typename LocalVariationStore::TConsensusAlphabet TConsensusAlphabet;
-                appendValue(varStore.consensus, TConsensusAlphabet(_getMaxIndex(*it)));
+                appendValue(varStore.consensus, TConsensusAlphabet(getMaxIndex(*it)));
                 appendValue(varStore.positions, std::make_pair(contigID, pos));
                 appendValue(varStore.profile, *it);
                 break;

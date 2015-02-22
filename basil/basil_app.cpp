@@ -310,9 +310,9 @@ seqan::ArgumentParser::ParseResult BasilOptions::parseCommandLine(int argc, char
     // Adding references section.
     addTextSection(parser, "References");
     addText(parser,
-            "Hajirasouliha, I., Hormozdiari, F., Alkan, C., Kidd, J.M., Birol, I., Eichler, E.E., Sahinalp, S.C.  "
-            "Detection and characterization of sequence insertions using paired-end next-generation sequencing.  "
-            "Bioinformatics 2010 May; 15;26(10):1277-83.");
+            "Holtgrewe, M., Kuchenbecker, L., & Reinert, K. (2015). Methods for the "
+            "Detection and Assembly of Novel Sequence in High-Throughput Sequencing "
+            "Data. Bioinformatics, btv051.");
 
     // Parse command line.
     seqan::ArgumentParser::ParseResult res = seqan::parse(parser, argc, argv);
@@ -747,7 +747,7 @@ void BasilAppImpl::writeResultVcf(std::vector<std::pair<OeaClusterRecord, Clippi
 
     appendName(sampleNamesCache(context(vcfFileOut)), options.individualName);
 
-    writeRecord(vcfFileOut, header);
+    writeHeader(vcfFileOut, header);
 
     // -----------------------------------------------------------------------
     // Write Records

@@ -63,6 +63,8 @@ public:
     TBamIOContext & bamIOContext();
     seqan::BamFileIn const & bamFileIn();
     void setProgressCallback(std::function<void()> fun);
+    __uint64 approximatePosition();
+    __uint64 fileSize() const;
 
 private:
     bool done;  // true if read first orphan
@@ -80,7 +82,7 @@ bool BamReaderImpl::atEnd() const
 
 TBamIOContext & BamReaderImpl::bamIOContext()
 {
-    return context(_bamFileIn);
+    return context(const_cast<seqan::BamFileIn const &>(_bamFileIn));
 }
 
 seqan::BamFileIn const & BamReaderImpl::bamFileIn()
@@ -91,6 +93,17 @@ seqan::BamFileIn const & BamReaderImpl::bamFileIn()
 void BamReaderImpl::setProgressCallback(std::function<void()> fun)
 {
     progressCallback = fun;
+}
+
+__uint64 BamReaderImpl::fileSize() const
+{
+    std::ifstream in(toCString(options.bamFileName), std::ifstream::ate | std::ifstream::binary);
+    return in.tellg();
+}
+
+__uint64 BamReaderImpl::approximatePosition()
+{
+    return position(_bamFileIn) >> 16;
 }
 
 void BamReaderImpl::read(std::vector<seqan::BamAlignmentRecord *> & out)
@@ -162,6 +175,16 @@ seqan::BamFileIn const & BamReader::bamFileIn()
 void BamReader::setProgressCallback(std::function<void()> fun)
 {
     impl->setProgressCallback(fun);
+}
+
+__uint64 BamReader::fileSize() const
+{
+    return impl->fileSize();
+}
+
+__uint64 BamReader::approximatePosition()
+{
+    return impl->approximatePosition();
 }
 
 // ----------------------------------------------------------------------------

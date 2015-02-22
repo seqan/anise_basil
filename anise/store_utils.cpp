@@ -289,9 +289,9 @@ void DifferingReadsRemoverImpl::fixContigs(TFragmentStore /*const*/ & store) con
         std::vector<unsigned> gapPositions;
         for (auto const & c : profile)
         {
-            if (_getMaxIndex(c) != 5)
+            if (getMaxIndex(c) != 5)
             {
-                appendValue(store.contigStore[contigID].seq, seqan::Dna5(_getMaxIndex(c)));
+                appendValue(store.contigStore[contigID].seq, seqan::Dna5(getMaxIndex(c)));
                 ++pos;
             }
             else

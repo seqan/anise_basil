@@ -203,7 +203,7 @@ public:
         {
             if (!open(outMapping, toCString(options.outputMapping)))
                 throw StreamingException() << "Could not open output mapping file " << toCString(options.outputMapping);
-            writeRecord(outMapping, buildBamHeader());
+            writeHeader(outMapping, buildBamHeader());
         }
 
         // Merge the output.
