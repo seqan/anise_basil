@@ -61,7 +61,7 @@ public:
     void read(std::vector<seqan::BamAlignmentRecord *> & out);
 
     TBamIOContext & bamIOContext();
-    seqan::BamFileIn const & bamFileIn();
+    seqan::BamFileIn & bamFileIn();
     void setProgressCallback(std::function<void()> fun);
     __uint64 approximatePosition();
     __uint64 fileSize() const;
@@ -85,7 +85,7 @@ TBamIOContext & BamReaderImpl::bamIOContext()
     return context(const_cast<seqan::BamFileIn const &>(_bamFileIn));
 }
 
-seqan::BamFileIn const & BamReaderImpl::bamFileIn()
+seqan::BamFileIn & BamReaderImpl::bamFileIn()
 {
     return _bamFileIn;
 }
@@ -167,7 +167,7 @@ TBamIOContext & BamReader::bamIOContext()
     return impl->bamIOContext();
 }
 
-seqan::BamFileIn const & BamReader::bamFileIn()
+seqan::BamFileIn & BamReader::bamFileIn()
 {
     return impl->bamFileIn();
 }

@@ -166,7 +166,7 @@ public:
     // Return the BamIOContext of the _bamStream.
     TBamIOContext & bamIOContext();
     // Return the internal BamFileIn.
-    seqan::BamFileIn const & bamFileIn();
+    seqan::BamFileIn & bamFileIn();
     // Return approximate position in input file.
     __uint64 approximatePosition();
     // Return size of input file.

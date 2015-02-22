@@ -426,7 +426,16 @@ private:
 
     // Write resulting matched clusters to VCF file.
     void writeResultVcf(std::vector<std::pair<OeaClusterRecord, ClippingClusterRecord> > const & records);
+
+    // Return file size in bytes.
+    __uint64 fileSize() const;
 };
+
+__uint64 BasilAppImpl::fileSize() const
+{
+    std::ifstream in(toCString(options.inputFile), std::ifstream::ate | std::ifstream::binary);
+    return in.tellg();
+}
 
 int BasilAppImpl::run(int argc, char const ** argv)
 {
@@ -591,7 +600,7 @@ void BasilAppImpl::execute(std::vector<OeaClusterRecord> & oeaClusters,
     BamReader bamReader(bamReaderOptions);
     // Setup progress indicator.
     unsigned long long const MIB = 1024 * 1024;
-    progress.reset(new ProgressBar(std::cerr, 0, fileSize(bamReader.bamFileIn()) / MIB,
+    progress.reset(new ProgressBar(std::cerr, 0, fileSize() / MIB,
                                    (options.verbosity == BasilOptions::NORMAL)));
     progress->setLabel(toCString(bamReaderOptions.bamFileName));
     progress->updateDisplay();
