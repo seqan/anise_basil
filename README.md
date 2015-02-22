@@ -7,28 +7,30 @@ ANISE is a method for the assembly of large insertions from paired reads in BAM 
 
 ### Obtaining and Compiling
 
-For obtaining the software, please use git for downloading the latest stable version from the *master* branch.
+The following instructions explain how to obtain, compile, and use ANISE on a Linux or Mac Os X system.
+You will need to install a C++ compiler with sufficient C++11 format (a fairly rent Linux distribution or copy of the Xcode developer tools should work) and [CMake].
+Also, you have to install [Lemon] and [Boost].
+
+For obtaining the software, use the following instructions for getting ANISE/BASIL and SeqAn.
 
 ```
-# git clone git@github.com:seqan/anise_basil.git
+~ # git clone git@github.com:seqan/seqan.git seqan_anise_basil
+seqan_anise_basil # cd seqan_anise_basil
+seqan_anise_basil # git checkout develop
+seqan_anise_basil # cd apps
+apps # git clone git@github.com:seqan/anise_basil.git
+apps # cd anise_basil
+anise_basil # git submodule init
+anise_basil # git submodule update
 ```
 
-Then, use `git submodule` for fetching the SeqAn library dependency.
+Then, compile the program.
 
 ```
-# cd anise_basil
-# git submodule init
-# git submodule update
-```
-
-Finally, compile the program.
-For this, you will need [CMake] and a C++ compiler with C++11 support.
-If you have a fairly recent Linux distribution or Mac Os X with a fairly recent Xcode version, you should be all set.
-
-```
-# cd build
-# cmake ..
-# make -j 4
+anise_basil # cd ../..
+seqan_anise_basil # mkdir build && cd build
+build # cmake ..
+build # make -j 4 anise basil
 ```
 
 You can control the number of cores to use for compiling with the `-j` parameter to `make`, thus the code above gives an example for the compilation with 4 cores.
@@ -41,9 +43,8 @@ You can now have a look at the command line help for both programs:
 
 ### A First Example
 
-The directory examples contains a reference file ref.fa and two reads files
-left.fq.gz and right.fq.gz.  The reference has a length of 10kb and the reads
-are sequenced from a donor that has a 2kb insertion into the reference.
+The directory examples contains a reference file `ref.fa` and two reads files `left.fq.gz` and `right.fq.gz`.
+The reference has a length of 10kb and the reads are sequenced from a donor that has a 2kb insertion into the reference.
 
 The first step is to map the reads to the reference, e.g. using BWA, and to get a sorted and indexed BAM file, e.g. using Samtools.
 
@@ -193,11 +194,11 @@ The first seven columns are as usually in VCF files (ref name, 1-based position,
 
 The eigth column contains the names of the score values given in the ninth column:
 
-* GSCORE   Geometric mean of the sum of "1 + $score" for all of the following scores.
-* CLEFT    Number of clipping signatures supporting the site from the left side.
-* CRIGHT   Number of clipping signatures supporting the site from the right side.
-* OEALEFT  Number of OEA alignments supporting the site from the left.
-* OEARIGHT Number of OEA alignmetns supproting the site from the right.
+* `GSCORE` Geometric mean of the sum of "1 + $score" for all of the following scores.
+* `CLEFT` Number of clipping signatures supporting the site from the left side.
+* `CRIGHT` Number of clipping signatures supporting the site from the right side.
+* `OEALEFT` Number of OEA alignments supporting the site from the left.
+* `OEARIGHT` Number of OEA alignmetns supproting the site from the right.
 
 Generally, one should filter for a minimum support of OEA records on each side, e.g. a value of 10 makes sense for a 30x coverage and showed good results on simulated data.
 
@@ -236,7 +237,9 @@ ANISE gives up in this case.
 
 For questions, comments, or suggestions, please file a [GitHub issue] or an email to [Manuel Holtgrewe]
 
+[Lemon]: http://lemon.cs.elte.hu/trac/lemon
 [CMake]: http://www.cmake.org
+[Boost]: http://www.boost.org
 [Methods for the Detection and Assembly of Novel Sequence in High-Throughput Sequencing Data]: http://bioinformatics.oxfordjournals.org/content/early/2015/02/01/bioinformatics.btv051.short
 [GitHub issue]: https://github.com/seqan/anise_basil/issues
 [Manuel Holtgrewe]: mailto:manuel.holtgrewe@fu-berlin.de
