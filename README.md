@@ -108,9 +108,7 @@ CGAAGCACTTTTGGCAGGCTTATAAACGCCCAGAATGAAGCACTCGCCATAGGTGGAAACCTTTAAGCGA
 CGCGGGGTGTGTCGGCCCTATCCCTTGCGCTTACAGACTTTATTTCTTCGTGAGGGAGTTGACCCATGCA
 ```
 
-An easy to use tool for verifying this example is EMBOSS Needle which you can use to compare `anise.fa` with the actual insertion in `example/ins.fa`.
-
-  https://www.ebi.ac.uk/Tools/psa/emboss_needle/nucleotide.html
+An easy to use tool for verifying this example is [EMBOSS Needle] which you can use to compare `anise.fa` with the actual insertion in `example/ins.fa`.
 
 Note that BASIL will in general detect all kinds of breakpoints, e.g. for inversions on real-world data.
 ANISE will try to assemble around these breakpoints but the assembly processes from the left and right will (generally) not meet.
@@ -127,9 +125,7 @@ You can use the script extract_spanning.awk to obtain the contigs marked as "spa
 
 Note that ANISE also assembles sequence left and right of the insert.
 This can be used to anchor the inserted sequence to the reference using BLAT.
-The executables blat and pslPretty are available from the UCSC site at
-
-  http://hgdownload.soe.ucsc.edu/downloads.html#source_downloads
+The executables blat and pslPretty are available from the [UCSC download site].
 
 Let us now use BLAT to align the contig back to our reference.
 
@@ -237,9 +233,11 @@ ANISE gives up in this case.
 
 For questions, comments, or suggestions, please file a [GitHub issue] or an email to [Manuel Holtgrewe]
 
-[Lemon]: http://lemon.cs.elte.hu/trac/lemon
-[CMake]: http://www.cmake.org
 [Boost]: http://www.boost.org
-[Methods for the Detection and Assembly of Novel Sequence in High-Throughput Sequencing Data]: http://bioinformatics.oxfordjournals.org/content/early/2015/02/01/bioinformatics.btv051.short
+[CMake]: http://www.cmake.org
+[EMBOSS Needle]: https://www.ebi.ac.uk/Tools/psa/emboss_needle/nucleotide.html
 [GitHub issue]: https://github.com/seqan/anise_basil/issues
+[Lemon]: http://lemon.cs.elte.hu/trac/lemon
 [Manuel Holtgrewe]: mailto:manuel.holtgrewe@fu-berlin.de
+[Methods for the Detection and Assembly of Novel Sequence in High-Throughput Sequencing Data]: http://bioinformatics.oxfordjournals.org/content/early/2015/02/01/bioinformatics.btv051.short
+[UCSC download site]: http://hgdownload.soe.ucsc.edu/downloads.html#source_downloads
