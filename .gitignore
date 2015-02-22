@@ -6,3 +6,4 @@ sandbox
 *.pyc
 *~
 *.sw?
+example/
