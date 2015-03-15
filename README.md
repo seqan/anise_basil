@@ -7,28 +7,23 @@ ANISE is a method for the assembly of large insertions from paired reads in BAM 
 
 ### Obtaining and Compiling
 
-The following instructions explain how to obtain, compile, and use ANISE on a Linux or Mac Os X system.
+The following instructions explain how to obtain, compile, and use ANISE on a Linux and Mac Os X system.
 You will need to install a C++ compiler with sufficient C++11 format (a fairly rent Linux distribution or copy of the Xcode developer tools should work) and [CMake].
-Also, you have to install [Lemon] and [Boost].
+Also, you have to install [Boost] (>= 1.51.0).
 
 For obtaining the software, use the following instructions for getting ANISE/BASIL and SeqAn.
 
 ```
-~ # git clone git@github.com:seqan/seqan.git seqan_anise_basil
-seqan_anise_basil # cd seqan_anise_basil
+~ # git clone https://github.com/seqan/anise_basil.git
+~ # cd seqan_anise_basil
 seqan_anise_basil # git checkout develop
-seqan_anise_basil # cd apps
-apps # git clone git@github.com:seqan/anise_basil.git
-apps # cd anise_basil
-anise_basil # git submodule init
-anise_basil # git submodule update
+seqan_anise_basil # git submodule update --recursive
 ```
 
 Then, compile the program.
 
 ```
-anise_basil # cd ../..
-seqan_anise_basil # mkdir build && cd build
+seqan_anise_basil # cd build
 build # cmake ..
 build # make -j 4 anise basil
 ```
