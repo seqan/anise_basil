@@ -203,7 +203,7 @@ public:
         {
             if (!open(outMapping, toCString(options.outputMapping)))
                 throw StreamingException() << "Could not open output mapping file " << toCString(options.outputMapping);
-            writeHeader(outMapping, buildBamHeader());
+            writeHeader(outMapping, buildBamHeader(outMapping));
         }
 
         // Merge the output.
@@ -426,7 +426,9 @@ private:
     }
 
     // Load the scaffolds for each site and write them to the output file.
-    seqan::BamHeader buildBamHeader()
+    //
+    // Update the context of out at the same time.
+    seqan::BamHeader buildBamHeader(seqan::BamFileOut & out)
     {
         ProgressBar pb(std::cerr, 0, appState.numSites, (options.verbosity == AniseOptions::NORMAL));
         pb.setLabel("  building BAM header");
@@ -445,6 +447,9 @@ private:
         setTagValue("PN", "anise", pg);
         setTagValue("CL", options.commandLine.c_str(), pg);
         appendValue(bamHeader, pg);
+
+        clear(contigNames(context(out)));
+        clear(contigLengths(context(out)));
 
         seqan::StringSet<seqan::CharString> ids, seqs;
         for (int siteID = 0; siteID < appState.numSites; ++siteID)
@@ -481,6 +486,9 @@ private:
                 ss << length(seqs[i]);
                 setTagValue("LN", ss.str().c_str(), sq);
                 appendValue(bamHeader, sq);
+
+                appendValue(contigNames(context(out)), ids[i]);
+                appendValue(contigLengths(context(out)), length(seqs[i]));
             }
 
             // Advance progress bar.

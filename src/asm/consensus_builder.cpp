@@ -360,10 +360,15 @@ std::unique_ptr<TFragmentStore> ConsensusBuilderImpl::run(
                   << "  componentLength.size() = " << componentLength.size() << "\n"
                   << "  numComponents = " << numComponents << "\n";
 
+    // TODO(holtgrew): Move the following two lines to library, together with the loop after the alignmentGraphToFragmentStore() call.
+    for (unsigned i = 0; i < length(seqsC); i += 2)
+        appendMatePair(*result, seqsC[i], seqsC[i + 1]);
     if (options.verbosity >= 2)
         std::cerr << "build store..\n";
     alignmentGraphToFragmentStore(*result, graph, distances, component, order, numComponents,
                                   /*logging=*/(options.verbosity >= 3));
+    for (auto & el : result->alignedReadStore)
+        el.pairMatchId = result->readStore[el.readId].matePairId;
 
     if (options.verbosity >= 2)
     {

@@ -13,7 +13,7 @@ set -x
 
 SCRATCH=$(mktemp -d)
 function cleanup {
-    echo rm -rf "$SCRATCH"
+    rm -rf "$SCRATCH"
 }
 trap cleanup EXIT
 echo -e "SCRATCH:\t${SCRATCH}"
@@ -47,4 +47,8 @@ ${ANISE} \
 # ---------------------------------------------------------------------------
 
 diff ${THIS_DIR}/01/anise.fa ${OUT_FA}
-diff ${THIS_DIR}/01/anise.sam ${OUT_SAM}
+
+# compare SAM file, stripping CL tag of @PG header
+diff \
+    <(perl -p -e 's/CL:.*//g' ${THIS_DIR}/01/anise.sam) \
+    <(perl -p -e 's/CL:.*//g' ${OUT_SAM})

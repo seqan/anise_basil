@@ -13,7 +13,7 @@ set -x
 
 SCRATCH=$(mktemp -d)
 function cleanup {
-    echo rm -rf "$SCRATCH"
+    rm -rf "$SCRATCH"
 }
 trap cleanup EXIT
 echo -e "SCRATCH:\t${SCRATCH}"

@@ -230,6 +230,8 @@ void ReadSet::load(TemporaryFileManager & manager, int siteID, int stepNo, Scaff
     seqan::BamFileIn bamFileIn;
     if (!open(bamFileIn, path.c_str()))
         throw AniseIOException() << "Could not open read set SAM file " << path << " for reading.";
+    seqan::BamHeader header;
+    readHeader(header, bamFileIn);
 
     // TODO(holtgrew): Check that the reference name are consistent with scaffold.
     (void)scaffold;
@@ -311,11 +313,14 @@ void ReadSet::save(TemporaryFileManager & manager, int siteID, int stepNo, Scaff
     // Build header.
     seqan::BamHeader bamHeader;
 
-    // Fill header records.
+    // Fill header records and set name and lengths.
     seqan::BamHeaderRecord hd;
     hd.type = seqan::BAM_HEADER_FIRST;
     setTagValue("VN", "1.5", hd);
     appendValue(bamHeader, hd);
+
+    resize(contigLengths(context(bamFileOut)), length(scaffold.seqs));
+    resize(contigNames(context(bamFileOut)), length(scaffold.seqs));
 
     for (unsigned i = 0; i < length(scaffold.seqs); ++i)
     {
@@ -326,6 +331,9 @@ void ReadSet::save(TemporaryFileManager & manager, int siteID, int stepNo, Scaff
         ss << length(scaffold.seqs[i]);
         setTagValue("LN", ss.str().c_str(), sq);
         appendValue(bamHeader, sq);
+
+        contigLengths(context(bamFileOut))[i] = length(scaffold.seqs[i]);
+        contigNames(context(bamFileOut))[i] = trimmedNames[i];
     }
 
     seqan::BamHeaderRecord co;

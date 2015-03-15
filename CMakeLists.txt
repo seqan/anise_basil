@@ -12,6 +12,8 @@ endif ()
 # Set output binary directory.
 set (EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin)
 
+enable_testing ()
+
 # ----------------------------------------------------------------------------
 # Prepare Dependency Search
 # ----------------------------------------------------------------------------

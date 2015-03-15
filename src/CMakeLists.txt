@@ -267,6 +267,13 @@ add_executable (oea_extractor
 target_link_libraries (oea_extractor progress_indicator ${SEQAN_LIBRARIES})
 
 # ----------------------------------------------------------------------------
+# Adding Tests
+# ----------------------------------------------------------------------------
+
+add_test (NAME 01_test_anise_minimal COMMAND ${CMAKE_SOURCE_DIR}/test/01_test_anise_minimal.sh $<TARGET_FILE:anise>)
+add_test (NAME 01_test_basil_minimal COMMAND ${CMAKE_SOURCE_DIR}/test/01_test_basil_minimal.sh $<TARGET_FILE:basil>)
+
+# ----------------------------------------------------------------------------
 # Installation
 # ----------------------------------------------------------------------------
 
