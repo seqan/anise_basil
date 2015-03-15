@@ -1,0 +1,6 @@
+[submodule "ext/lemon"]
+	path = ext/lemon
+	url = https://github.com/holtgrewe/lemon-mirror.git
+[submodule "ext/seqan"]
+	path = ext/seqan
+	url = https://github.com/seqan/seqan.git

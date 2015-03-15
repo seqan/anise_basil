@@ -1,15 +1,3 @@
-# ===========================================================================
-#                  SeqAn - The Library for Sequence Analysis
-# ===========================================================================
-# File: /extras/apps/anise/CMakeLists.txt
-#
-# CMakeLists.txt file for anise.
-# ===========================================================================
-
-cmake_minimum_required (VERSION 2.8.2)
-project (seqan_extras_apps_anise)
-message (STATUS "Configuring extras/apps/anise")
-
 # ----------------------------------------------------------------------------
 # Dependencies
 # ----------------------------------------------------------------------------
@@ -27,12 +15,7 @@ set (SEQAN_FIND_DEPENDENCIES ZLIB)
 find_package (SeqAn REQUIRED)
 
 # Search for LEMON libraries.
-find_package (LEMON QUIET)
-
-if (NOT LEMON_FOUND)
-  message (STATUS "  LEMON library not found: Not building anise.")
-  return ()
-endif (NOT LEMON_FOUND)
+find_package (LEMON REQUIRED)
 
 # Search for Boost >= 1.51.0.
 find_package (Boost 1.51.0 REQUIRED)
@@ -285,49 +268,43 @@ target_link_libraries (oea_extractor progress_indicator ${SEQAN_LIBRARIES})
 # ----------------------------------------------------------------------------
 
 # Set variables for installing, depending on the selected build type.
-if (NOT SEQAN_PREFIX_SHARE_DOC)
-  seqan_setup_install_vars (anise)
-endif (NOT SEQAN_PREFIX_SHARE_DOC)
+#if (NOT SEQAN_PREFIX_SHARE_DOC)
+#  seqan_setup_install_vars (anise)
+#endif (NOT SEQAN_PREFIX_SHARE_DOC)
 
 # Install anise in ${PREFIX}/bin directory
-install (TARGETS anise
-                 basil
-                 lba
-         DESTINATION bin)
-install (PROGRAMS scripts/filter_basil.py
-                  scripts/extract_spanning.awk
-                  scripts/best_blat.py
-         DESTINATION bin)
-
-# Install example files
-install (FILES example/left.fq.gz
-               example/right.fq.gz
-               example/ref.fa
-               example/ins.fa
-         DESTINATION example)
-
-# Install non-binary files for the package to "." for app builds and
-# ${PREFIX}/share/doc/anise for SeqAn release builds.
-install (FILES LICENSE
-               README
-         DESTINATION ${SEQAN_PREFIX_SHARE_DOC})
-
-# ----------------------------------------------------------------------------
-# App Test
-# ----------------------------------------------------------------------------
-
-#seqan_add_app_test (anise)
+#install (TARGETS anise
+#                 basil
+#                 lba
+#         DESTINATION bin)
+#install (PROGRAMS scripts/filter_basil.py
+#                  scripts/extract_spanning.awk
+#                  scripts/best_blat.py
+#         DESTINATION bin)
+#
+## Install example files
+#install (FILES example/left.fq.gz
+#               example/right.fq.gz
+#               example/ref.fa
+#               example/ins.fa
+#         DESTINATION example)
+#
+## Install non-binary files for the package to "." for app builds and
+## ${PREFIX}/share/doc/anise for SeqAn release builds.
+#install (FILES LICENSE
+#               README
+#         DESTINATION ${SEQAN_PREFIX_SHARE_DOC})
 
 # ----------------------------------------------------------------------------
 # CPack Install
 # ----------------------------------------------------------------------------
 
-if (SEQAN_BUILD_SYSTEM STREQUAL "APP:anise")
-  set (CPACK_PACKAGE_NAME "anise")
-  set (CPACK_PACKAGE_DESCRIPTION_SUMMARY "anise")
-  set (CPACK_DEBIAN_PACKAGE_MAINTAINER "Manuel Holtgrewe <manuel.holtgrewe@fu-berlin.de>")
-  set (CPACK_PACKAGE_VENDOR "Manuel Holtgrewe <manuel.holtgrewe@fu-berlin.de>")
-
-  seqan_configure_cpack_app (anise "anise")
-endif (SEQAN_BUILD_SYSTEM STREQUAL "APP:anise")
+#if (SEQAN_BUILD_SYSTEM STREQUAL "APP:anise")
+#  set (CPACK_PACKAGE_NAME "anise")
+#  set (CPACK_PACKAGE_DESCRIPTION_SUMMARY "anise")
+#  set (CPACK_DEBIAN_PACKAGE_MAINTAINER "Manuel Holtgrewe <manuel.holtgrewe@fu-berlin.de>")
+#  set (CPACK_PACKAGE_VENDOR "Manuel Holtgrewe <manuel.holtgrewe@fu-berlin.de>")
+#
+#  seqan_configure_cpack_app (anise "anise")
+#endif (SEQAN_BUILD_SYSTEM STREQUAL "APP:anise")
 
