@@ -1,0 +1,12 @@
+build
+dox/html
+manual/build
+sandbox
+!sandbox/CMakeLists.txt
+*.pyc
+*~
+*.sw?
+example/
+
+test/**/*.fa.*
+test/**/*.sai
