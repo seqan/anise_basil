@@ -124,6 +124,8 @@ int BamLibraryEstimator::run(BamLibraryInfo & result, char const * path, std::fu
         std::cerr << "ERROR: Could not open SAM/BAM file " << path << "\n";
         return 1;
     }
+    seqan::BamHeader bamHeader;
+    readHeader(bamHeader, bamStream);
 
     // Running mean of read size.
     __int64 readSizeSum = 0;

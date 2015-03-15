@@ -189,6 +189,8 @@ size_t OrphanExtractor::createFastq(TemporaryFileManager & tmpMgr)
     // Open BAM and BAI file.
     if (!open(bamFileIn, toCString(options.inputMapping)))
         throw std::runtime_error("Could not open input mapping for orphans extraction!");
+    seqan::BamHeader bamHeader;
+    readHeader(bamHeader, bamFileIn);
     seqan::CharString baiFilename = options.inputMapping;
     append(baiFilename, ".bai");
     seqan::BamIndex<seqan::Bai> bamIndex;
@@ -319,6 +321,8 @@ AlignmentExtractor::AlignmentExtractor(AniseOptions const & options) : options(o
     // Open bamFileIn.
     if (!open(bamFileIn, toCString(options.inputMapping)))
         throw std::runtime_error("Could not open BAM mapping file for reading.");
+    seqan::BamHeader bamHeader;
+    readHeader(bamHeader, bamFileIn);
 
     // Read BAI file.
     std::string baiPath = toCString(options.inputMapping);
@@ -681,25 +685,32 @@ void PreparationStepImpl::run()
 unsigned PreparationStepImpl::prepareExtraction()
 {
     // Count VCF records.
-    if (!open(vcfFileIn, toCString(options.inputVcf)))
-        throw std::runtime_error("Could not open input VCF file for site extraction.");
     unsigned numSites = 0;
-    seqan::VcfRecord record;
-    for (; !atEnd(vcfFileIn); ++numSites)
     {
-        try
+        seqan::VcfFileIn tmpVcfFile;
+        if (!open(tmpVcfFile, toCString(options.inputVcf)))
+            throw std::runtime_error("Could not open input VCF file for site extraction.");
+        seqan::VcfHeader vcfHeader;
+        readHeader(vcfHeader, tmpVcfFile);
+        seqan::VcfRecord record;
+        for (; !atEnd(tmpVcfFile); ++numSites)
         {
-            readRecord(record, vcfFileIn);
-        }
-        catch (seqan::ParseError const & e)
-        {
-            throw std::runtime_error("Problem reading from VCF file.");
+            try
+            {
+                readRecord(record, tmpVcfFile);
+            }
+            catch (seqan::ParseError const & e)
+            {
+                throw std::runtime_error("Problem reading from VCF file.");
+            }
         }
     }
 
-    // Open VCF file.
+    // Re-open VCF file.
     if (!open(vcfFileIn, toCString(options.inputVcf)))
         throw std::runtime_error("Could not open input VCF file for site extraction.");
+    seqan::VcfHeader vcfHeader;
+    readHeader(vcfHeader, vcfFileIn);
 
     // Build index for FASTA file and write out to disk.
     if (!open(faiIndex, toCString(options.inputReference)))

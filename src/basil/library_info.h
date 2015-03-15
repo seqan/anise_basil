@@ -171,13 +171,15 @@ BamLibraryEstimator::run(BamLibraryInfo & result, char const * path)
     typedef std::vector<unsigned> TVecISize;
     TVecISize vecISize;
 
-    // Open SAM/BAM stream.
+    // Open SAM/BAM stream and read header.
     seqan::BamFileIn bamFileIn;
     if (!open(bamFileIn, path))
     {
         std::cerr << "ERROR: Could not open SAM/BAM file " << path << "\n";
         return 1;
     }
+    seqan::BamHeader header;
+    readHeader(header, bamFileIn);
 
     // Orientations.
     unsigned orientationCounters[4] = {0, 0, 0, 0};

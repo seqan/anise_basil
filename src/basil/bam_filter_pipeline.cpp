@@ -54,6 +54,7 @@ public:
     {
         if (!open(_bamFileIn, toCString(options.bamFileName)))
             throw BamFilterException("Could not open BAM file!");
+        readHeader(bamHeader, _bamFileIn);
     }
 
     bool atEnd() const;
@@ -69,6 +70,7 @@ public:
 private:
     bool done;  // true if read first orphan
     BamReaderOptions options;
+    seqan::BamHeader bamHeader;
     seqan::BamFileIn _bamFileIn;
     std::function<void()> progressCallback;
 

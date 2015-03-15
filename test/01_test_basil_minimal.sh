@@ -42,4 +42,4 @@ ${BASIL} \
 # Compare the output VCF to the reference one.
 # ---------------------------------------------------------------------------
 
-diff ${THIS_DIR}/01/basil.vcf ${OUT_BAM}
+diff ${THIS_DIR}/01/basil.vcf ${OUT_VCF}
