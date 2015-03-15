@@ -7,3 +7,6 @@ sandbox
 *~
 *.sw?
 example/
+
+test/**/*.fa.*
+test/**/*.sai
