@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/seqan/anise_basil.svg?branch=master)](https://travis-ci.org/seqan/anise_basil)
+
 # Anise & Basil
 
 BASIL is a method to detect breakpoints for structural variants (including insertion breakpoints) from aligned paired HTS reads in BAM format.
