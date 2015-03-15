@@ -42,6 +42,8 @@
 #include <seqan/seq_io.h>
 #include <seqan/sequence.h>
 
+#include "shared/version.h"
+
 // ==========================================================================
 // Class LbaOptions
 // ==========================================================================
@@ -119,16 +121,8 @@ parseCommandLine(LbaOptions & options, int argc, char const ** argv)
     seqan::ArgumentParser parser("lba");
     // Set short description, version, and date.
     setShortDescription(parser, "Local Block Aligner");
-#ifdef SEQAN_REVISION
-    setVersion(parser, "0.1 [" + std::string(SEQAN_REVISION) + "]");
-#else
-    setVersion(parser, "0.1");
-#endif
-#ifdef SEQAN_DATE
-    setDate(parser, SEQAN_DATE);
-#else
-    setDate(parser, "May 2014");
-#endif
+    setVersion(parser, VERSION_STR);
+    setDate(parser, DATE_STR);
     setCategory(parser, "Pairwise Alignment");
 
     // Define usage line and long description.

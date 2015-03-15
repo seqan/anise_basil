@@ -46,6 +46,7 @@
 #include "bam_filter_pipeline.h"
 
 #include "shared/orphan_extractor.h"
+#include "shared/version.h"
 
 typedef std::runtime_error OeaExtractorAppException;
 
@@ -95,14 +96,9 @@ seqan::ArgumentParser::ParseResult OeaExtractorApp::parseCommandLine(int argc, c
 
     // Set short description, version, and date.
     setShortDescription(parser, "OEA Extractor");
-#ifdef SEQAN_REVISION
-        setVersion(parser, "0.2.0-beta.1 [" + std::string(SEQAN_REVISION) + "]");
-#else
-        setVersion(parser, "0.2.0-beta.1");
-#endif
-#ifdef SEQAN_DATE
-        setDate(parser, SEQAN_DATE);
-#endif
+    setVersion(parser, VERSION_STR);
+    setDate(parser, DATE_STR);
+
     // Set usage line and long description.
     addUsageLine(parser, "[\\fIOPTIONS\\fP] \\fB-im\\fP \\fIIN.{sam,bam}\\fP \\fB-om\\fP \\fIOUT.{sam,bam}\\fP \\fB-of\\fP \\fIOUT.fa\\fP");
     addDescription(parser, "Extract OEA alignments and orphans from coordinate sorted BAM file.");

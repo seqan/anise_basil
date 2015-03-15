@@ -41,6 +41,8 @@
 #include <seqan/bam_io.h>
 #include <seqan/vcf_io.h>
 
+#include "shared/version.h"
+
 #include "progress_indicator.h"
 #include "cluster_matching.h"
 #include "thread_safe_queue.h"
@@ -174,14 +176,9 @@ seqan::ArgumentParser::ParseResult BasilOptions::parseCommandLine(int argc, char
 
     // Set short description, version, and date.
     setShortDescription(parser, "BASe-resolution Insert Locator");
-#ifdef SEQAN_REVISION
-        setVersion(parser, "0.2.0-beta.1 [" + std::string(SEQAN_REVISION) + "]");
-#else
-        setVersion(parser, "0.2.0-beta.1");
-#endif
-#ifdef SEQAN_DATE
-        setDate(parser, SEQAN_DATE);
-#endif
+    setVersion(parser, VERSION_STR);
+    setDate(parser, DATE_STR);
+
     // Set usage line and long description.
     addUsageLine(parser, "[\\fIOPTIONS\\fP] \\fB-ir\\fP \\fIREF\\fP \\fB-im\\fP \\fIMAPPING\\fP \\fB-ov\\fP \\fIOUT.vcf\\fP");
     addDescription(parser, "Scan SAM/BAM file \\fIMAPPING\\fP for signatures of structural variations.  The reference ");

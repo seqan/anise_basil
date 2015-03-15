@@ -44,6 +44,7 @@
 #include <seqan/vcf_io.h>
 
 #include "shared/progress_indicator.h"
+#include "shared/version.h"
 
 #include "anise/anise_options.h"
 #include "anise/app_state.h"
@@ -72,14 +73,8 @@ seqan::ArgumentParser::ParseResult parseCommandLine(AniseOptions & options, int 
     // Set short description, version, and date
 
     setShortDescription(parser, "Assembly of Novel Inserted SEquence");
-#ifdef SEQAN_REVISION
-        setVersion(parser, "0.2.0-beta.1 [" + std::string(SEQAN_REVISION) + "]");
-#else
-        setVersion(parser, "0.2.0-beta.1");
-#endif
-#ifdef SEQAN_DATE
-        setDate(parser, SEQAN_DATE);
-#endif
+    setVersion(parser, VERSION_STR);
+    setDate(parser, DATE_STR);
 
     // Define usage line and long description
 

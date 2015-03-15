@@ -158,7 +158,7 @@ add_library (anise_rep_solv
 target_link_libraries (anise_rep_solv anise_asm anise_rep_sep anise_scaffolder)
 
 # Evaluation app.
-add_executable (lba eval/lba.cpp )
+add_executable (lba eval/lba.cpp shared/version.h)
 target_link_libraries (lba progress_indicator ${SEQAN_LIBRARIES})
 
 # ANISE application.
@@ -208,7 +208,8 @@ add_executable (anise
                 shared/bam_io_utils.h
                 shared/bam_io_utils.cpp
                 shared/streaming_exception.h
-                shared/utils.h)
+                shared/utils.h
+                shared/version.h)
 target_link_libraries (anise progress_indicator anise_rep_solv anise_asm anise_rep_sep anise_scaffolder
                              ${SEQAN_LIBRARIES})
 
@@ -238,7 +239,8 @@ add_executable (basil
                 basil/thread_safe_queue.h
                 basil/oea_clustering.cpp
                 basil/oea_clustering.h
-                basil/utils.h)
+                basil/utils.h
+                shared/version.h)
 target_link_libraries (basil progress_indicator ${SEQAN_LIBRARIES})
 
 add_executable (oea_extractor
@@ -260,51 +262,17 @@ add_executable (oea_extractor
                 basil/filter_reorder.h
                 basil/filter_shared_types.h
                 basil/thread_safe_queue.h
-                basil/utils.h)
+                basil/utils.h
+                shared/version.h)
 target_link_libraries (oea_extractor progress_indicator ${SEQAN_LIBRARIES})
 
 # ----------------------------------------------------------------------------
 # Installation
 # ----------------------------------------------------------------------------
 
-# Set variables for installing, depending on the selected build type.
-#if (NOT SEQAN_PREFIX_SHARE_DOC)
-#  seqan_setup_install_vars (anise)
-#endif (NOT SEQAN_PREFIX_SHARE_DOC)
-
 # Install anise in ${PREFIX}/bin directory
-#install (TARGETS anise
-#                 basil
-#                 lba
-#         DESTINATION bin)
-#install (PROGRAMS scripts/filter_basil.py
-#                  scripts/extract_spanning.awk
-#                  scripts/best_blat.py
-#         DESTINATION bin)
-#
-## Install example files
-#install (FILES example/left.fq.gz
-#               example/right.fq.gz
-#               example/ref.fa
-#               example/ins.fa
-#         DESTINATION example)
-#
-## Install non-binary files for the package to "." for app builds and
-## ${PREFIX}/share/doc/anise for SeqAn release builds.
-#install (FILES LICENSE
-#               README
-#         DESTINATION ${SEQAN_PREFIX_SHARE_DOC})
-
-# ----------------------------------------------------------------------------
-# CPack Install
-# ----------------------------------------------------------------------------
-
-#if (SEQAN_BUILD_SYSTEM STREQUAL "APP:anise")
-#  set (CPACK_PACKAGE_NAME "anise")
-#  set (CPACK_PACKAGE_DESCRIPTION_SUMMARY "anise")
-#  set (CPACK_DEBIAN_PACKAGE_MAINTAINER "Manuel Holtgrewe <manuel.holtgrewe@fu-berlin.de>")
-#  set (CPACK_PACKAGE_VENDOR "Manuel Holtgrewe <manuel.holtgrewe@fu-berlin.de>")
-#
-#  seqan_configure_cpack_app (anise "anise")
-#endif (SEQAN_BUILD_SYSTEM STREQUAL "APP:anise")
+install (TARGETS anise
+                 basil
+                 lba
+         DESTINATION bin)
 
