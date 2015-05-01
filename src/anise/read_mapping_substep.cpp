@@ -635,7 +635,7 @@ private:
     void mapReads(ResultDistributor & distributor, ReadMappingContigsData const & contigsData)
     {
         // Open orphans input file.
-        std::string inPath = tmpMgr.fileName("orphans", ".fq");
+        std::string inPath = tmpMgr.fileName(ORPHANS_TOKEN, ORPHANS_EXT);
         seqan::SeqFileIn inReads;
         if (!open(inReads, inPath.c_str()))
             throw AniseIOException() << "Could not open orphans file for reading " << inPath;

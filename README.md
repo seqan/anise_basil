@@ -17,15 +17,16 @@ For obtaining the software, use the following instructions for getting ANISE/BAS
 
 ```
 ~ # git clone https://github.com/seqan/anise_basil.git
-~ # cd seqan_anise_basil
-seqan_anise_basil # git checkout develop
-seqan_anise_basil # git submodule update --recursive
+~ # cd anise_basil
+anise_basil # git checkout develop
+anise_basil # git submodule init
+anise_basil # git submodule update --recursive
 ```
 
 Then, compile the program.
 
 ```
-seqan_anise_basil # cd build
+anise_basil # cd build
 build # cmake ..
 build # make -j 4 anise basil
 ```
