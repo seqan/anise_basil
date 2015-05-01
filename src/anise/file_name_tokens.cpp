@@ -43,7 +43,7 @@ char const * SITE_STATE_EXT = ".txt";
 
 // Token and extension for orphans FASTQ file.
 char const * ORPHANS_TOKEN = "orphans";
-char const * ORPHANS_EXT = ".fq";
+char const * ORPHANS_EXT = ".fq.gz";
 
 // Token and extension for orphans active map.
 char const * ORPHANS_ACTIVE_TOKEN = "orphans_active";
