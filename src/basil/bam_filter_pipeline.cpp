@@ -135,6 +135,8 @@ void BamReaderImpl::read(std::vector<seqan::BamAlignmentRecord *> & out)
 
         if (hasFlagSecondary(*record) || hasFlagQCNoPass(*record) || hasFlagDuplicate(*record))
             continue;  // Ignore secondary and flagged records.
+        if (hasFlagSupplementary(*record))
+            continue;  // Skip supplementary records.
 
         if (recordsRead % (10 * 1000) == 0u)
             progressCallback();
