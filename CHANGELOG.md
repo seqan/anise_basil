@@ -2,9 +2,15 @@
 
 ## develop
 
+## v1.0.2
+
+* skipping incompatible alignments in ANISE, compatible with BWA-MEM output
+  now
+* fixing progress display in BASIL
+
 ## v1.0.1
 
 * using compression for orphans file
-# fixing README.md
+* fixing README.md
 
 ## v1.0.0

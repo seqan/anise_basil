@@ -601,7 +601,7 @@ void BasilAppImpl::execute(std::vector<OeaClusterRecord> & oeaClusters,
                                    (options.verbosity == BasilOptions::NORMAL)));
     progress->setLabel(toCString(bamReaderOptions.bamFileName));
     progress->updateDisplay();
-    auto callback = [&bamReader,&progress,MIB] { progress->advanceTo(position(bamReader.bamFileIn()) / MIB); };
+    auto callback = [&bamReader,&progress,MIB] { progress->advanceTo((position(bamReader.bamFileIn()) >> 16) / MIB); };
     bamReader.setProgressCallback(callback);
 
     // Build the filter pipeline.

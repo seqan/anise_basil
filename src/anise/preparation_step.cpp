@@ -377,6 +377,8 @@ void AlignmentExtractor::firstPass(ReadSet & readSet, std::set<seqan::CharString
             throw std::runtime_error("Problem reading from BAM file.");
         }
         updateRecordTags(record);
+        if (hasFlagSupplementary(record))
+            continue;  // ignore supplementary alignments
         if (record.rID == seqan::BamAlignmentRecord::INVALID_REFID || record.rID != siteState.rID ||
             record.beginPos > siteState.pos + options.maxFragmentSize())
             break;  // Done
@@ -490,6 +492,8 @@ void AlignmentExtractor::secondPass(ReadSet & readSet, std::set<seqan::CharStrin
         {
             throw std::runtime_error("Problem reading from BAM file.");
         }
+        if (hasFlagSupplementary(record))
+            continue;  // ignore supplementary alignments
         updateRecordTags(record);
         if (record.rID == seqan::BamAlignmentRecord::INVALID_REFID || record.rID != siteState.rID ||
             record.beginPos > siteState.pos + options.maxFragmentSize())
@@ -512,6 +516,10 @@ void AlignmentExtractor::secondPass(ReadSet & readSet, std::set<seqan::CharStrin
         if (infoAligned.rID == seqan::BamAlignmentRecord::INVALID_REFID ||
             infoShadow.rID == seqan::BamAlignmentRecord::INVALID_REFID)
             continue;  // We have not seen both yet.
+
+        if ((hasFlagRC(infoAligned) && (hasFlagRC(infoShadow) || (infoShadow.beginPos > infoAligned.beginPos)))
+                || (!hasFlagRC(infoAligned) && (!hasFlagRC(infoShadow) || (infoShadow.beginPos < infoAligned.beginPos))))
+            continue;  // Discordant alignment of PE reads (either wrong relative orientation or position)
 
         // If we have now seen alignments for both mates of the clipping pair then we can compute the coordinates.
         // Instead of checking whether we are left or right of the called insert site we assume that the clipped record
