@@ -2,7 +2,7 @@
 
 ## develop
 
-## v1.0.2
+## v1.2.0
 
 * skipping incompatible alignments in ANISE, compatible with BWA-MEM output
   now
