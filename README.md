@@ -18,7 +18,7 @@ For obtaining the software, use the following instructions for getting ANISE/BAS
 ```
 ~ # git clone https://github.com/seqan/anise_basil.git
 ~ # cd anise_basil
-anise_basil # git checkout develop
+anise_basil # git checkout master
 anise_basil # git submodule init
 anise_basil # git submodule update --recursive
 ```
